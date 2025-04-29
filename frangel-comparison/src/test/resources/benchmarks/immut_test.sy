@@ -1,0 +1,21 @@
+{
+  "source": "",
+  "variables": {
+    "inp": "[Int]",
+    "foo": "[String]"
+  },
+  "returnType": "[Int]",
+  "immutable": ["foo"],
+  "examples": [
+    {
+      "input": {
+        "inp": "[2, 1, 3]",
+        "foo": "['']"
+      },
+      "output": "[1, 2, 3]"
+    }
+  ],
+  "solution": [
+    "inp.sort()"
+  ]
+}

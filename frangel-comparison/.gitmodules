@@ -1,0 +1,3 @@
+[submodule "lib/FrAngel"]
+	path = lib/FrAngel
+	url = https://github.com/KasraF/FrAngel
