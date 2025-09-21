@@ -1,0 +1,41 @@
+package ruse.benchmarks.frangel;
+
+import frangel.Example;
+import frangel.SynthesisTask;
+import frangel.Tag;
+import frangel.benchmarks.TaskCreator;
+
+import ruse.benchmarks.RuseBenchmarkGroup;
+import ruse.classes.geom.*;
+
+public enum SyPet_10_scale implements TaskCreator {
+    INSTANCE;
+    static {
+        RuseBenchmarkGroup.FRANGEL.register(INSTANCE);
+    }
+
+    @Override
+    public SynthesisTask createTask() {
+        SynthesisTask task = new SynthesisTask()
+                .setName("sypet_10_scale")
+                .setInputTypes(Rect.class, double.class, double.class)
+                .setInputNames("rect", "scaleX", "scaleY")
+                .setOutputType(Rect.class)
+                .addPackages("ruse.classes.geom")
+                .addTags(Tag.SINGLE_LINE); // Easily written in one line
+
+        task.addExample(new Example()
+                .setInputs(() -> new Object[] { new Rect(10, 20, 10, 2), 2.0, 3.0 })
+                .setOutput(new Rect(20, 60, 20, 6)));
+
+        return task;
+    }
+
+    public static Rect solution(Rect rect, double scaleX, double scaleY) {
+        Rect t = AffineTransform.transformRect(rect, AffineTransform.getScaleTransform(scaleX, scaleY));
+
+        // System.err.printf("%d %d %d %d\n", t.min.x(), t.min.y(), t.max.x(), t.max.y());
+
+        return t;
+    }
+}

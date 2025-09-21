@@ -15,7 +15,7 @@ To compile, you need to run the following code:
 ```sh
 rm -rf out;
 mkdir -p "./out/production/frangel_benchmarks";
-javac -cp "lib/*:lib/FrAngel/lib/*:lib/FrAngel/frangel.jar" -d "out/production/frangel_benchmarks" src/main/java/**.java
+javac -cp "lib/*:lib/FrAngel/lib/*:lib/FrAngel/frangel.jar" -d "out/production/frangel_benchmarks" $(find src/main/java/ -name *.java)
 ```
 
 And to run:

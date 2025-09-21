@@ -1,0 +1,22 @@
+{
+  "source": "https://github.com/kensens/FrAngel/blob/master/src/frangel/benchmarks/other/ABC.java",
+  "variables": {
+    "a": "String",
+    "b": "String",
+    "c": "String"
+  },
+  "returnType": "String",
+  "examples": [
+    {
+      "input": {
+        "a": "'hi'",
+        "b": "'bye'",
+        "c": "'!'"
+      },
+      "output": "'hibye!'"
+    }
+  ],
+  "solution": [
+      "a + b + c"
+    ]
+}

@@ -4,6 +4,7 @@ import frangel.Settings;
 import frangel.SynthesisTask;
 import frangel.utils.Utils;
 import utils.Utilities;
+import java.util.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Date;
 import java.util.Objects;
+
+import ruse.benchmarks.RuseBenchmarkGroup;
+
 
 public class Main {
 	public static void main(String[] args) throws IOException {
@@ -32,6 +36,19 @@ public class Main {
 			timeout = Integer.parseInt(args[2]);
 		}
 
+        List<SynthesisTask> tasks = new ArrayList<>();
+        List<Class<?>> creatorClasses = new ArrayList<>();
+
+		for (RuseBenchmarkGroup group : RuseBenchmarkGroup.values()) {
+			tasks.addAll(group.getTasks());
+			creatorClasses.addAll(group.getCreatorClasses());
+		}
+
+		if (!RuseBenchmarkGroup.verifyTasks()) {
+			System.err.println("Tasks are not valid");
+			System.exit(1);
+		}
+
 		// Setup FrAngel
 		Settings.USE_ANGELIC_CONDITIONS = false;
 		Settings.USE_SIMPLE_NAME = true;
@@ -46,7 +63,7 @@ public class Main {
 		csv = Files.createFile(csv);
 
 		// First, warm up!
-		System.out.print("Warming up... ");
+		System.out.println("Warming up... ");
 		runBenchmarks(path.toFile(), null, 5, true);
 		System.out.println("Done!");
 
@@ -59,36 +76,51 @@ public class Main {
 	}
 
 	public static void runBenchmarks(File file, Path csvOutput, int timeout, boolean warmup) throws IOException {
+		int count = warmup ? 1 : 5;
 		if (file.isDirectory()) {
 			for (File subf : Objects.requireNonNull(file.listFiles())) {
 				runBenchmarks(subf, csvOutput, timeout, warmup);
 			}
 		} else if (file.getName().endsWith(".sy")) {
-			int count = warmup ? 1 : 5;
-
 			for (int i = 0; i < count; i++) {
 				if (!warmup)
 					System.out.print("Synthesizing " + file.getName() + ":\t ");
 
 				SynthesisTask task = Utilities.fromFile(file);
-				FrAngel synth = new FrAngel(task);
-				Settings.VERBOSE = 0;
-				FrAngelResult result = synth.run(Utils.getTimeout(timeout));
-
+				runBenchmarks(file, task, csvOutput, timeout, warmup);
+			}
+		} else if (file.getName().endsWith(".java")) {
+			for (int i = 0; i < count; i++) {
 				if (!warmup)
-					System.out.printf("[%.3f] ", result.getTime());
+					System.out.print("Synthesizing " + file.getName() + ":\t ");
 
-				if (!warmup) {
-					if (result.isSuccess()) {
-						System.out.println("SUCCESS\n---\n" + result.getProgram() + "\n---\n");
-					} else {
-						System.out.println("FAILED");
-					}
-					Utilities.printCsvRow(task.getName(), file.getAbsolutePath(), result, csvOutput);
+				SynthesisTask task = RuseBenchmarkGroup.getTaskByCreator(file.getName().replace(".java", ""));
+				if (task == null) {
+					System.out.println("Task not found: " + file.getName());
+					return;
 				}
+				runBenchmarks(file, task, csvOutput, timeout, warmup);
 			}
 		} else {
 			System.out.println("Not a benchmark file: " + file.getAbsolutePath());
+		}
+	}
+
+	public static void runBenchmarks(File file, SynthesisTask task, Path csvOutput, int timeout, boolean warmup) throws IOException {
+		FrAngel synth = new FrAngel(task);
+		Settings.VERBOSE = 0;
+		FrAngelResult result = synth.run(Utils.getTimeout(timeout));
+
+		if (!warmup)
+			System.out.printf("[%.3f] ", result.getTime());
+
+		if (!warmup) {
+			if (result.isSuccess()) {
+				System.out.println("SUCCESS\n---\n" + result.getProgram() + "\n---\n");
+			} else {
+				System.out.println("FAILED");
+			}
+			Utilities.printCsvRow(task.getName(), file.getAbsolutePath(), result, csvOutput);
 		}
 	}
 }

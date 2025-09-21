@@ -1,0 +1,48 @@
+package ruse.benchmarks.ruse;
+
+import frangel.Example;
+import frangel.SynthesisTask;
+import frangel.Tag;
+import frangel.benchmarks.TaskCreator;
+
+import ruse.classes.ruse.BinarySearchTreeNode;
+
+import ruse.benchmarks.RuseBenchmarkGroup;
+
+public enum Ruse_bst_valid implements TaskCreator {
+    INSTANCE;
+    static {
+        RuseBenchmarkGroup.FRANGEL.register(INSTANCE);
+    }
+
+    @Override
+    public SynthesisTask createTask() {
+        SynthesisTask task = new SynthesisTask()
+                .setName("ruse_bst_valid")
+                .setInputTypes(BinarySearchTreeNode.class)
+                .setInputNames("tree")
+                .addPackages("ruse.classes.ruse")
+                .setOutputType(boolean.class)
+                .addTags(Tag.SINGLE_LINE); // Easily written in one line
+
+        task.addExample(new Example()
+                .setInputs(() -> new Object[] { 
+                        new BinarySearchTreeNode(1, null, new BinarySearchTreeNode(28)),
+                     }
+                )
+                .setOutput(true));
+
+        task.addExample(new Example()
+                .setInputs(() -> new Object[] { 
+                        new BinarySearchTreeNode(3, null, new BinarySearchTreeNode(59, null, new BinarySearchTreeNode(59))),
+                     }
+                )
+                .setOutput(false));
+
+        return task;
+    }
+
+    public static boolean solution(BinarySearchTreeNode tree) {
+        return tree.valid();
+    }
+}

@@ -1,0 +1,20 @@
+{
+  "source": "https://github.com/kensens/FrAngel/blob/master/src/frangel/benchmarks/other/AB.java",
+  "variables": {
+    "a": "String",
+    "b": "String"
+  },
+  "returnType": "String",
+  "examples": [
+    {
+      "input": {
+        "a": "'hi'",
+        "b": "'bye'"
+      },
+      "output": "'hibye'"
+    }
+  ],
+  "solution": [
+      "a + b"
+    ]
+}
