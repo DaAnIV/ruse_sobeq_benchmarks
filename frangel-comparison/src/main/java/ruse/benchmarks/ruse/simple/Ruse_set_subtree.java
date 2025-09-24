@@ -1,4 +1,4 @@
-package ruse.benchmarks.ruse;
+package ruse.benchmarks.ruse.simple;
 
 import frangel.Example;
 import frangel.SynthesisTask;
@@ -21,7 +21,7 @@ public enum Ruse_set_subtree implements TaskCreator {
                 .setName("ruse_set_subtree")
                 .setInputTypes(BinaryTree.class, BinaryTree.class)
                 .setInputNames("tree1", "tree2")
-                .addPackages("ruse.classes.ruse")
+                .addClasses(BinaryTree.class)
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()

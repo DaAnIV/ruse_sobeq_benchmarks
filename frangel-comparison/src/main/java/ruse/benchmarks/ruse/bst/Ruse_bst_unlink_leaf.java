@@ -1,4 +1,4 @@
-package ruse.benchmarks.ruse;
+package ruse.benchmarks.ruse.bst;
 
 import frangel.Example;
 import frangel.SynthesisTask;
@@ -21,7 +21,7 @@ public enum Ruse_bst_unlink_leaf implements TaskCreator {
                 .setName("ruse_bst_unlink_leaf")
                 .setInputTypes(BinarySearchTreeNode.class)
                 .setInputNames("tree")
-                .addPackages("ruse.classes.ruse")
+                .addClasses(BinarySearchTreeNode.class)
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()

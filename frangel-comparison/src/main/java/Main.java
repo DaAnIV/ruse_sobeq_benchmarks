@@ -33,7 +33,7 @@ public class Main {
 		int timeout = 3600;
 
 		if (args.length > 1) {
-			timeout = Integer.parseInt(args[2]);
+			timeout = Integer.parseInt(args[1]);
 		}
 
         List<SynthesisTask> tasks = new ArrayList<>();

@@ -1,4 +1,4 @@
-package ruse.benchmarks.ruse;
+package ruse.benchmarks.ruse.bst;
 
 import frangel.Example;
 import frangel.SynthesisTask;
@@ -22,7 +22,7 @@ public enum Ruse_bst_height implements TaskCreator {
                 .setInputTypes(BinarySearchTreeNode.class)
                 .setInputNames("tree")
                 .setOutputType(int.class)
-                .addPackages("ruse.classes.ruse")
+                .addClasses(BinarySearchTreeNode.class)
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()
