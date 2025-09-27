@@ -47,6 +47,6 @@ public enum Ruse_user_names implements TaskCreator {
     }
 
     public static String solution(User a, User b, UserTuple c) {
-        return a.getName() + ", " + b.getName();
+        return a.name + ", " + b.name;
     }
 }

@@ -6,7 +6,6 @@ import frangel.Tag;
 import frangel.benchmarks.TaskCreator;
 
 import ruse.classes.ruse.User;
-import ruse.classes.ruse.UserTuple;
 
 import ruse.benchmarks.RuseBenchmarkGroup;
 
@@ -24,7 +23,7 @@ public enum Ruse_user_names_aliasing implements TaskCreator {
                 .setInputNames("a", "b", "c", "d")
                 .setOutputType(String.class)
                 .addLiterals(String.class, ", ")
-                .addClasses(User.class, UserTuple.class)
+                .addClasses(User.class)
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()
@@ -57,6 +56,6 @@ public enum Ruse_user_names_aliasing implements TaskCreator {
     }
 
     public static String solution(User a, User b, User c, User d) {
-        return a.getName() + ", " + b.getName();
+        return a.name + ", " + b.name;
     }
 }

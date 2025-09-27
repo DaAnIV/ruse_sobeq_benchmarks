@@ -27,16 +27,24 @@ public enum Ruse_user_names_simple implements TaskCreator {
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()
-                .setInputs(() -> new Object[] { 
-                    new User("John", "Doe"),
-                    new User("Alex", "Man")
+                .setInputs(() -> {
+                    User user_a = new User("John", "Doe");
+                    User user_b = new User("Alex", "Man");
+                    return new Object[] { 
+                        user_a,
+                        user_b,
+                    };
                 })
                 .setOutput("John, Alex"));
 
         task.addExample(new Example()
-                .setInputs(() -> new Object[] { 
-                    new User("Alan", "Wake"),
-                    new User("Kevin", "Duck")
+                .setInputs(() -> {
+                    User user_a = new User("Alan", "Wake");
+                    User user_b = new User("Kevin", "Duck");
+                    return new Object[] { 
+                        user_a,
+                        user_b,
+                    };
                 })
                 .setOutput("Alan, Kevin"));
 
@@ -44,6 +52,6 @@ public enum Ruse_user_names_simple implements TaskCreator {
     }
 
     public static String solution(User a, User b) {
-        return a.getName() + ", " + b.getName();
+        return a.name + ", " + b.name;
     }
 }

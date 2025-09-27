@@ -24,7 +24,7 @@ public enum Ruse_user_names_connected implements TaskCreator {
                 .setInputNames("a", "b", "c")
                 .setOutputType(String.class)
                 .addLiterals(String.class, ", ")
-                .addClasses(User.class)
+                .addClasses(User.class, UserTuple.class)
                 .addTags(Tag.SINGLE_LINE); // Easily written in one line
 
         task.addExample(new Example()
@@ -53,6 +53,6 @@ public enum Ruse_user_names_connected implements TaskCreator {
     }
 
     public static String solution(User a, User b, UserTuple c) {
-        return a.getName() + ", " + b.getName();
+        return a.name + ", " + b.name;
     }
 }
