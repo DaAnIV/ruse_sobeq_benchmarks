@@ -38,8 +38,8 @@ public enum Ruse_mut_graph implements TaskCreator {
     }
 
     public static void solution(GraphNode graph1, GraphNode graph2, GraphNode graph3) {
-        graph1.incValue();
-        graph2.incValue();
-        graph3.incValue();
+        graph1.incValue(1);
+        graph2.incValue(1);
+        graph3.incValue(1);
     }
 }

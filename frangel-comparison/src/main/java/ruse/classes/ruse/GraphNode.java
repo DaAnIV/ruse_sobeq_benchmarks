@@ -12,7 +12,7 @@ public class GraphNode {
         this.neighbors = new Vector<GraphNode>(Arrays.asList(neighbors));
     }
 
-    public void incValue() {
-        this.value++;
+    public void incValue(int delta) {
+        this.value += delta;
     }
 }
